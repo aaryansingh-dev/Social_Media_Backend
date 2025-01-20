@@ -20,6 +20,8 @@ public class SocialUser {
     @OneToOne(mappedBy = "user",
             cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
     private SocialProfile socialProfile;
+    // Cascading used for creating another object when making one
+    // ex: when making socialUser, I want to automatically create socialProfile with the incoming data from client
     // this relationship is managed by "user" variable in SocialProfile class. It is the owner of this relationship.
 
     @OneToMany(mappedBy = "socialUser", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -36,6 +38,11 @@ public class SocialUser {
     @Override
     public int hashCode(){
         return Objects.hash(id);
+    }
+
+    public void setSocialProfile(SocialProfile socialProfile){
+        socialProfile.setUser(this);
+        this.socialProfile = socialProfile;
     }
 
 }

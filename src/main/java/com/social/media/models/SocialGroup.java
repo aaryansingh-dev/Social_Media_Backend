@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -19,5 +20,10 @@ public class SocialGroup {
     @ManyToMany(mappedBy = "groups")
     @JsonIgnore
     private Set<SocialUser> socialUsers = new HashSet<>();
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(id);
+    }
 
 }

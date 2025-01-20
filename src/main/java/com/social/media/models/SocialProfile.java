@@ -22,5 +22,9 @@ public class SocialProfile {
     @JsonIgnore
     private SocialUser user;
 
-
+    public void setSocialUser(SocialUser socialUser){
+        this.user = socialUser;
+        if (user.getSocialProfile() != this)
+            user.setSocialProfile(this);
+    }
 }
