@@ -5,6 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -19,4 +24,16 @@ public class SocialUser {
             cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
     private SocialProfile socialProfile;
     // this relationship is managed by "user" variable in SocialProfile class. It is the owner of this relationship.
+
+    @OneToMany(mappedBy = "socialUser", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Post> posts = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_group",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id")
+    )
+    private Set<SocialGroup> groups = new HashSet<>();
+
 }
